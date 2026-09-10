@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Octavo Zapatos: calzado original importado a precios exclusivos. Running, casual y formal. Reserva tu par en línea.">
+  <title>Octavo Zapatos | Calzado original a precio exclusivo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="header">
+    <a href="#inicio" class="logo">Octavo<span>Zapatos</span></a>
+
+    <button id="boton-menu" class="boton-menu" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="nav-principal">
+      <span class="linea-menu"></span>
+      <span class="linea-menu"></span>
+      <span class="linea-menu"></span>
+    </button>
+
+    <nav id="nav-principal" class="nav" aria-label="Navegación principal">
+      <ul class="nav-lista">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#marcas">Marcas</a></li>
+        <li><a href="#reserva">Reserva</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+      <h1>Calzado original importado a precios que otros no conocen</h1>
+      <p class="hero-texto">
+        En Octavo Zapatos traemos zapatos 100% originales de las mejores marcas,
+        hasta 60% más baratos que en el mercado local. Elige tu par y resérvalo en línea.
+      </p>
+      <a href="#catalogo" class="boton boton-principal">Ver catálogo</a>
+    </section>
+
+    <!-- CATÁLOGO -->
+    <section id="catalogo" class="seccion">
+      <h2>Catálogo</h2>
+      <p class="seccion-texto">
+        Filtra los zapatos por categoría, marca, talla o precio para encontrar tu par ideal.
+      </p>
+
+      <form class="filtros" id="filtros">
+        <fieldset class="filtros-grupo">
+          <legend class="filtros-titulo">Filtros</legend>
+
+          <div class="filtro filtro-categorias">
+            <span class="filtro-etiqueta">Categoría</span>
+            <div class="filtro-botones" id="filtro-categoria">
+              <button type="button" class="boton-filtro activo" data-categoria="todas">Todas</button>
+              <button type="button" class="boton-filtro" data-categoria="running">Running</button>
+              <button type="button" class="boton-filtro" data-categoria="casual">Casual</button>
+              <button type="button" class="boton-filtro" data-categoria="formal">Formal</button>
+            </div>
+          </div>
+
+          <div class="filtro">
+            <label for="filtro-marca">Marca</label>
+            <select id="filtro-marca">
+              <option value="todas">Todas las marcas</option>
+            </select>
+          </div>
+
+          <div class="filtro">
+            <label for="filtro-talla">Talla</label>
+            <select id="filtro-talla">
+              <option value="todas">Todas las tallas</option>
+            </select>
+          </div>
+
+          <div class="filtro">
+            <label for="filtro-precio">Precio menor a ($)</label>
+            <input type="number" id="filtro-precio" min="0" step="10000" placeholder="Ej: 250000">
+          </div>
+        </fieldset>
+      </form>
+
+      <p id="sin-resultados" class="sin-resultados" hidden>
+        No hay zapatos que coincidan con los filtros aplicados.
+      </p>
+
+      <ul class="grid-zapatos" id="grid-zapatos">
+        <!-- Las tarjetas de zapatos se generan con JavaScript -->
+      </ul>
+    </section>
+
+    <!-- MARCAS -->
+    <section id="marcas" class="seccion">
+      <h2>Nuestras marcas</h2>
+      <p class="seccion-texto">
+        Todos nuestros zapatos son originales, importados directamente de proveedores internacionales autorizados.
+      </p>
+      <ul class="lista-marcas" id="lista-marcas">
+        <!-- Las tarjetas de marcas se generan con JavaScript -->
+      </ul>
+    </section>
+
+    <!-- RESERVA -->
+    <section id="reserva" class="seccion">
+      <h2>Reserva tu pedido</h2>
+      <p class="seccion-texto">
+        Déjanos tus datos y el par que quieres. Te contactamos para confirmar
+        disponibilidad, precio final y forma de pago. Sin compromiso.
+      </p>
+
+      <form class="formulario" id="form-reserva" novalidate>
+
+        <fieldset class="formulario-grupo">
+          <legend>Tus datos</legend>
+
+          <div class="campo">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" autocomplete="name" required>
+            <span class="error" id="error-nombre" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" autocomplete="email" required>
+            <span class="error" id="error-email" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" autocomplete="tel" required>
+            <span class="error" id="error-telefono" aria-live="polite"></span>
+          </div>
+        </fieldset>
+
+        <fieldset class="formulario-grupo">
+          <legend>Tu pedido</legend>
+
+          <div class="campo">
+            <label for="zapato">Zapato que te interesa</label>
+            <select id="zapato" name="zapato" required>
+              <option value="">Selecciona un zapato…</option>
+            </select>
+            <span class="error" id="error-zapato" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="talla">Talla</label>
+            <input type="number" id="talla" name="talla" min="20" max="50" required>
+            <span class="error" id="error-talla" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="mensaje">Mensaje (opcional)</label>
+            <textarea id="mensaje" name="mensaje" rows="3" placeholder="Ej: me interesa en color negro"></textarea>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="boton boton-principal">Enviar reserva</button>
+        <p class="exito" id="mensaje-exito" aria-live="polite" hidden>
+          ¡Reserva enviada! Te contactaremos muy pronto.
+        </p>
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p class="footer-logo">Octavo Zapatos</p>
+    <p>Calzado original importado · Envíos a toda Colombia</p>
+    <p class="footer-copy">© 2026 Octavo Zapatos. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

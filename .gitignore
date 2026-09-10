@@ -1,0 +1,13 @@
+# Carpeta de trabajo local: notas, plan y avance (no se publica en GitHub)
+local/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Archivos temporales del editor
+*.swp
+*~
