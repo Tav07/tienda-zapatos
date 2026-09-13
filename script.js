@@ -36,19 +36,25 @@ const marcas = [
       "Zapatos formales de cuero. Elegancia accesible para la oficina y las ocasiones especiales.",
     pais: "Suiza",
   },
+  {
+    nombre: "North Star",
+    descripcion:
+      "El clásico colombiano de tenis urbanos. Cuero y suela de goma que aguantan el uso diario.",
+    pais: "Colombia",
+  },
 ];
 
 // Catálogo de zapatos. Categorías disponibles: running, casual, formal.
 const zapatos = [
   {
-    nombre: "Nike Revolution 7",
+    nombre: "Nike Revolution 8",
     marca: "Nike",
     categoria: "running",
     precio: 289900,
     talla: 41,
     descripcion:
       "Ligeros y transpirables, ideales para empezar a correr o para caminatas largas.",
-    imagen: "images/nike-revolution-7.jpg",
+    imagen: "images/nike-revolution-8.jpg",
   },
   {
     nombre: "Nike Air Max SC",
@@ -61,14 +67,14 @@ const zapatos = [
     imagen: "images/nike-air-max-sc.jpg",
   },
   {
-    nombre: "Adidas Duramo SL",
+    nombre: "Adidas Duramo SL2",
     marca: "Adidas",
     categoria: "running",
     precio: 259900,
     talla: 40,
     descripcion:
       "Zapatillas ligeras con mediasuela EVA. Comodidad que aguanta el ritmo.",
-    imagen: "images/adidas-duramo-sl.jpg",
+    imagen: "images/adidas-duramo-sl2.jpg",
   },
   {
     nombre: "Adidas Grand Court",
@@ -111,34 +117,34 @@ const zapatos = [
     imagen: "images/puma-softride-enzo.jpg",
   },
   {
-    nombre: "New Balance 520 V8",
+    nombre: "New Balance 5030",
     marca: "New Balance",
     categoria: "running",
     precio: 319900,
     talla: 43,
     descripcion:
-      "Amortiguación Fresh Foam y malla transpirable. Calidad de corredor exigente.",
-    imagen: "images/new-balance-520-v8.jpg",
+      "Malla transpirable y amortiguación ligera. Comodidad para el running y el día a día.",
+    imagen: "images/new-balance-5030.jpg",
   },
   {
-    nombre: "New Balance 373",
+    nombre: "New Balance 9060",
     marca: "New Balance",
     categoria: "casual",
-    precio: 289900,
+    precio: 349900,
     talla: 39,
     descripcion:
-      "Silueta retro de los años 70 con materiales modernos. Comodidad con alma vintage.",
-    imagen: "images/new-balance-373.jpg",
+      "Silueta chunky con estética ochentera. El modelo lifestyle más buscado.",
+    imagen: "images/new-balance-9060.jpg",
   },
   {
-    nombre: "Bata Daniel",
-    marca: "Bata",
-    categoria: "formal",
-    precio: 199900,
+    nombre: "North Star Court",
+    marca: "North Star",
+    categoria: "casual",
+    precio: 179900,
     talla: 40,
     descripcion:
-      "Zapato formal de cuero con suela ligera. Para la oficina y las ocasiones especiales.",
-    imagen: "images/bata-daniel.jpg",
+      "Tenis clásicos de cuero con suela de goma. El básico urbano que combina con todo.",
+    imagen: "images/bata-north-star.jpg",
   },
   {
     nombre: "Bata Flex",
@@ -161,3 +167,101 @@ const zapatos = [
     imagen: "images/puma-rebound-joy.jpg",
   },
 ];
+
+// ============================================================
+// Render dinámico: catálogo, marcas y select del formulario
+// se generan recorriendo los arreglos de datos.
+// ============================================================
+
+// Referencias a los contenedores del DOM
+const gridZapatos = document.getElementById("grid-zapatos");
+const listaMarcas = document.getElementById("lista-marcas");
+const selectZapato = document.getElementById("zapato");
+
+// Formatea un precio en pesos colombianos: 289900 -> "$ 289.900"
+function formatearPrecio(precio) {
+  return `$ ${precio.toLocaleString("es-CO")}`;
+}
+
+// Crea la tarjeta <li> de un zapato con su estructura completa
+function crearTarjetaZapato(zapato) {
+  const tarjeta = document.createElement("li");
+  tarjeta.className = "tarjeta";
+
+  const imagen = document.createElement("img");
+  imagen.src = zapato.imagen;
+  imagen.alt = `Zapato ${zapato.nombre} de la marca ${zapato.marca}`;
+  imagen.loading = "lazy";
+
+  const cuerpo = document.createElement("div");
+  cuerpo.className = "tarjeta-cuerpo";
+
+  const titulo = document.createElement("h3");
+  titulo.textContent = zapato.nombre;
+
+  const descripcion = document.createElement("p");
+  descripcion.textContent = zapato.descripcion;
+
+  const pie = document.createElement("div");
+  pie.className = "tarjeta-pie";
+
+  const precio = document.createElement("span");
+  precio.className = "tarjeta-precio";
+  precio.textContent = formatearPrecio(zapato.precio);
+
+  const talla = document.createElement("span");
+  talla.className = "tarjeta-talla";
+  talla.textContent = `Talla ${zapato.talla}`;
+
+  pie.append(precio, talla);
+  cuerpo.append(titulo, descripcion, pie);
+  tarjeta.append(imagen, cuerpo);
+  return tarjeta;
+}
+
+// Crea la tarjeta <li> de una marca (nombre, descripción y país)
+function crearTarjetaMarca(marca) {
+  const tarjeta = document.createElement("li");
+  tarjeta.className = "tarjeta-marca";
+
+  const titulo = document.createElement("h3");
+  titulo.textContent = marca.nombre;
+
+  const descripcion = document.createElement("p");
+  descripcion.textContent = marca.descripcion;
+
+  const pais = document.createElement("span");
+  pais.className = "tarjeta-marca-pais";
+  pais.textContent = marca.pais;
+
+  tarjeta.append(titulo, descripcion, pais);
+  return tarjeta;
+}
+
+// Llena el catálogo del grid
+function renderCatalogo() {
+  zapatos.forEach((zapato) => {
+    gridZapatos.append(crearTarjetaZapato(zapato));
+  });
+}
+
+// Llena la sección de marcas
+function renderMarcas() {
+  marcas.forEach((marca) => {
+    listaMarcas.append(crearTarjetaMarca(marca));
+  });
+}
+
+// Llena el <select> de zapatos del formulario de reserva
+function llenarSelectZapatos() {
+  zapatos.forEach((zapato) => {
+    const opcion = document.createElement("option");
+    opcion.value = zapato.nombre;
+    opcion.textContent = `${zapato.nombre} — ${formatearPrecio(zapato.precio)}`;
+    selectZapato.append(opcion);
+  });
+}
+
+renderCatalogo();
+renderMarcas();
+llenarSelectZapatos();
