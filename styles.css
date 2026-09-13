@@ -209,3 +209,295 @@ h3 {
   font-size: 0.9rem;
   margin-top: 0.5rem;
 }
+
+/* ---------- Secciones ---------- */
+.seccion {
+  max-width: 1100px;
+  margin-inline: auto;
+  padding: clamp(3rem, 8vw, 5rem) clamp(1rem, 5vw, 3rem);
+}
+
+.seccion-texto {
+  max-width: 60ch;
+  margin-top: 0.75rem;
+  color: var(--texto-suave);
+}
+
+/* ---------- Barra de filtros con Flexbox ---------- */
+.filtros {
+  margin-top: 2rem;
+}
+
+.filtros-grupo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1.25rem 2rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  background: var(--gris-suave);
+}
+
+.filtros-titulo {
+  padding-inline: 0.5rem;
+  font-weight: 600;
+}
+
+.filtro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.filtro label,
+.filtro-etiqueta {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.filtro select,
+.filtro input {
+  min-width: 11rem;
+  padding: 0.55rem 0.75rem;
+  font: inherit;
+  color: var(--tinta);
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+}
+
+.filtro-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.boton-filtro {
+  padding: 0.45rem 1rem;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--tinta);
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.boton-filtro:hover {
+  border-color: var(--naranja);
+}
+
+.boton-filtro.activo {
+  background: var(--naranja);
+  border-color: var(--naranja);
+  color: var(--fondo);
+}
+
+/* ---------- Catálogo en Grid responsive ----------
+   Las columnas crecen o disminuyen solas según el ancho
+   disponible, sin media queries adicionales. */
+.grid-zapatos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+  list-style: none;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tarjeta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(28, 30, 38, 0.1);
+}
+
+.tarjeta img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.tarjeta-cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+  padding: 1rem;
+}
+
+.tarjeta-cuerpo p {
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+
+.tarjeta-pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.tarjeta-precio {
+  font-family: "Syne", system-ui, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.tarjeta-talla {
+  padding: 0.25rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--azul);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+}
+
+/* ---------- Mensaje sin resultados ---------- */
+.sin-resultados {
+  padding: 2.5rem 1rem;
+  margin-top: 2rem;
+  text-align: center;
+  color: var(--texto-suave);
+  background: var(--gris-suave);
+  border-radius: 12px;
+}
+
+/* ---------- Marcas en Grid ---------- */
+.lista-marcas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+  list-style: none;
+}
+
+.tarjeta-marca {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+}
+
+.tarjeta-marca p {
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+
+.tarjeta-marca-pais {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--azul);
+}
+
+/* ---------- Formulario de reserva ---------- */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 640px;
+  margin-top: 2rem;
+}
+
+.formulario-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  background: var(--gris-suave);
+}
+
+.formulario-grupo legend {
+  padding-inline: 0.5rem;
+  font-weight: 600;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.campo label {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  font: inherit;
+  color: var(--tinta);
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+}
+
+.error {
+  font-size: 0.85rem;
+  color: #dc2626;
+}
+
+.exito {
+  font-weight: 600;
+  color: #16a34a;
+}
+
+/* ---------- Responsive: tablets y móviles ---------- */
+@media (max-width: 768px) {
+  /* Aparece el botón hamburguesa */
+  .boton-menu {
+    display: flex;
+  }
+
+  /* El menú queda colapsado; JavaScript lo abre con .abierto */
+  .nav {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    display: none;
+    padding: 1rem clamp(1rem, 5vw, 3rem);
+    background: var(--fondo);
+    border-bottom: 1px solid var(--borde);
+  }
+
+  .nav.abierto {
+    display: block;
+  }
+
+  .nav-lista {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .filtros-grupo,
+  .formulario-grupo {
+    padding: 1rem;
+  }
+
+  .filtro select,
+  .filtro input {
+    min-width: 100%;
+  }
+}
