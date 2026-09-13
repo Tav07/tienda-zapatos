@@ -1,0 +1,211 @@
+/* ============================================================
+   Octavo Zapatos — hoja de estilos
+   Paleta: naranja #f97316 · azul #2563eb · tinta #1c1e26
+   Tipografías: Syne (display) + Inter (texto) — Google Fonts
+   ============================================================ */
+
+/* ---------- Variables de la paleta Octavo ---------- */
+:root {
+  --naranja: #f97316;
+  --naranja-oscuro: #ea580c;
+  --azul: #2563eb;
+  --tinta: #1c1e26;
+  --tinta-suave: rgba(255, 255, 255, 0.75);
+  --fondo: #ffffff;
+  --gris-suave: #f6f6f8;
+  --borde: #e5e7eb;
+  --texto-suave: #55575f;
+}
+
+/* ---------- Reset básico ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---------- Base ---------- */
+html {
+  scroll-behavior: smooth;
+  /* Deja espacio para el header fijo al saltar a las secciones */
+  scroll-padding-top: 5rem;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--tinta);
+  background: var(--fondo);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+::selection {
+  background: var(--naranja);
+  color: var(--fondo);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--naranja);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- Tipografía ---------- */
+h1, h2, h3 {
+  font-family: "Syne", system-ui, sans-serif;
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+/* ---------- Botones ---------- */
+.boton {
+  display: inline-block;
+  padding: 0.8rem 1.8rem;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.boton-principal {
+  background: var(--naranja);
+  color: var(--fondo);
+}
+
+.boton-principal:hover {
+  background: var(--naranja-oscuro);
+}
+
+/* ---------- Header con Flexbox ---------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1rem clamp(1rem, 5vw, 3rem);
+  background: var(--fondo);
+  border-bottom: 1px solid var(--borde);
+}
+
+.logo {
+  font-family: "Syne", system-ui, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--tinta);
+  text-decoration: none;
+}
+
+.logo span {
+  color: var(--naranja);
+}
+
+.nav-lista {
+  display: flex;
+  gap: 1.8rem;
+  list-style: none;
+}
+
+.nav-lista a {
+  font-weight: 500;
+  color: var(--tinta);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-lista a:hover {
+  color: var(--naranja);
+}
+
+/* Botón hamburguesa: oculto en escritorio, se activa en móvil */
+.boton-menu {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.linea-menu {
+  width: 24px;
+  height: 2px;
+  background: var(--tinta);
+}
+
+/* ---------- Hero con Flexbox ---------- */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: clamp(4rem, 10vw, 7rem) clamp(1rem, 5vw, 3rem);
+  background: var(--tinta);
+  color: var(--fondo);
+}
+
+.hero h1 {
+  max-width: 18ch;
+}
+
+.hero-texto {
+  max-width: 55ch;
+  font-size: 1.125rem;
+  color: var(--tinta-suave);
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  padding: 3rem clamp(1rem, 5vw, 3rem);
+  background: var(--tinta);
+  color: var(--tinta-suave);
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: "Syne", system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--fondo);
+}
+
+.footer-copy {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
