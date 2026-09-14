@@ -10,3 +10,5 @@ $RECYCLE.BIN/
 # Archivos temporales del editor
 *.swp
 *~
+.vercel
+.env*
