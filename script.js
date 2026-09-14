@@ -238,11 +238,13 @@ function crearTarjetaMarca(marca) {
   return tarjeta;
 }
 
-// Llena el catálogo del grid
-function renderCatalogo() {
-  zapatos.forEach((zapato) => {
+// Dibuja el catálogo con la lista dada y avisa si no hay resultados
+function renderZapatos(lista) {
+  gridZapatos.innerHTML = "";
+  lista.forEach((zapato) => {
     gridZapatos.append(crearTarjetaZapato(zapato));
   });
+  sinResultados.hidden = lista.length > 0;
 }
 
 // Llena la sección de marcas
@@ -262,6 +264,213 @@ function llenarSelectZapatos() {
   });
 }
 
-renderCatalogo();
+// ============================================================
+// Filtros combinables: categoría, marca, talla y precio menor a
+// Cada cambio re-filtra el catálogo completo.
+// ============================================================
+
+const botonesCategoria = document.querySelectorAll(".boton-filtro");
+const filtroMarca = document.getElementById("filtro-marca");
+const filtroTalla = document.getElementById("filtro-talla");
+const filtroPrecio = document.getElementById("filtro-precio");
+const sinResultados = document.getElementById("sin-resultados");
+
+// Estado de los filtros ("todas" / null = ese filtro no aplica)
+const filtros = {
+  categoria: "todas",
+  marca: "todas",
+  talla: "todas",
+  precioMaximo: null,
+};
+
+// Devuelve los zapatos que cumplen TODOS los filtros activos
+function filtrarZapatos() {
+  return zapatos.filter((zapato) => {
+    const pasaCategoria =
+      filtros.categoria === "todas" || zapato.categoria === filtros.categoria;
+    const pasaMarca = filtros.marca === "todas" || zapato.marca === filtros.marca;
+    const pasaTalla =
+      filtros.talla === "todas" || zapato.talla === Number(filtros.talla);
+    const pasaPrecio =
+      filtros.precioMaximo === null || zapato.precio < filtros.precioMaximo;
+    return pasaCategoria && pasaMarca && pasaTalla && pasaPrecio;
+  });
+}
+
+// Llena el select de marcas de los filtros
+function llenarFiltroMarcas() {
+  marcas.forEach((marca) => {
+    const opcion = document.createElement("option");
+    opcion.value = marca.nombre;
+    opcion.textContent = marca.nombre;
+    filtroMarca.append(opcion);
+  });
+}
+
+// Llena el select de tallas con las tallas únicas del catálogo
+function llenarFiltroTallas() {
+  const tallas = [...new Set(zapatos.map((zapato) => zapato.talla))].sort(
+    (a, b) => a - b
+  );
+  tallas.forEach((talla) => {
+    const opcion = document.createElement("option");
+    opcion.value = talla;
+    opcion.textContent = `Talla ${talla}`;
+    filtroTalla.append(opcion);
+  });
+}
+
+// Categoría: botones, uno solo marcado como activo
+botonesCategoria.forEach((boton) => {
+  boton.addEventListener("click", () => {
+    filtros.categoria = boton.dataset.categoria;
+    botonesCategoria.forEach((b) => b.classList.toggle("activo", b === boton));
+    renderZapatos(filtrarZapatos());
+  });
+});
+
+// Marca y talla: selects
+filtroMarca.addEventListener("change", () => {
+  filtros.marca = filtroMarca.value;
+  renderZapatos(filtrarZapatos());
+});
+
+filtroTalla.addEventListener("change", () => {
+  filtros.talla = filtroTalla.value;
+  renderZapatos(filtrarZapatos());
+});
+
+// Precio: "menor a $X". Mientras se escribe se re-filtra (evento input)
+filtroPrecio.addEventListener("input", () => {
+  filtros.precioMaximo = filtroPrecio.value === "" ? null : Number(filtroPrecio.value);
+  renderZapatos(filtrarZapatos());
+});
+
+// ============================================================
+// Menú hamburguesa: abre/cierra el nav en móvil
+// ============================================================
+
+const botonMenu = document.getElementById("boton-menu");
+const navPrincipal = document.getElementById("nav-principal");
+
+function alternarMenu() {
+  const abierto = navPrincipal.classList.toggle("abierto");
+  botonMenu.setAttribute("aria-expanded", abierto);
+}
+
+botonMenu.addEventListener("click", alternarMenu);
+
+// Al elegir una sección, el menú se guarda solo (útil en móvil)
+navPrincipal.querySelectorAll("a").forEach((enlace) => {
+  enlace.addEventListener("click", () => {
+    navPrincipal.classList.remove("abierto");
+    botonMenu.setAttribute("aria-expanded", "false");
+  });
+});
+
+// ============================================================
+// Ejecución inicial
+// ============================================================
+
+renderZapatos(zapatos);
 renderMarcas();
 llenarSelectZapatos();
+llenarFiltroMarcas();
+llenarFiltroTallas();
+
+// ============================================================
+// Validación del formulario de reserva:
+// errores inline junto a cada campo, sin alert().
+// Si es válido: mensaje de éxito + reset del formulario.
+// ============================================================
+
+const formReserva = document.getElementById("form-reserva");
+const mensajeExito = document.getElementById("mensaje-exito");
+
+const camposFormulario = [
+  document.getElementById("nombre"),
+  document.getElementById("email"),
+  document.getElementById("telefono"),
+  document.getElementById("zapato"),
+  document.getElementById("talla"),
+];
+
+const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const REGEX_TELEFONO = /^[0-9+\s()-]{7,15}$/;
+
+// Muestra el error bajo el campo y lo resalta en rojo
+function mostrarError(campo, texto) {
+  document.getElementById(`error-${campo.id}`).textContent = texto;
+  campo.classList.add("campo-invalido");
+}
+
+// Limpia el error de un campo
+function limpiarError(campo) {
+  document.getElementById(`error-${campo.id}`).textContent = "";
+  campo.classList.remove("campo-invalido");
+}
+
+// Devuelve el texto del error de un campo ("" si es válido)
+function validarCampo(campo) {
+  const valor = campo.value.trim();
+  switch (campo.id) {
+    case "nombre":
+      if (valor === "") return "Escribe tu nombre.";
+      if (valor.length < 3) return "El nombre debe tener al menos 3 letras.";
+      return "";
+    case "email":
+      if (valor === "") return "Escribe tu email.";
+      if (!REGEX_EMAIL.test(valor)) {
+        return "El email no tiene un formato válido (ej: nombre@correo.com).";
+      }
+      return "";
+    case "telefono":
+      if (valor === "") return "Escribe tu teléfono.";
+      if (!REGEX_TELEFONO.test(valor)) {
+        return "El teléfono debe tener entre 7 y 15 dígitos.";
+      }
+      return "";
+    case "zapato":
+      if (valor === "") return "Elige el zapato que quieres reservar.";
+      return "";
+    case "talla": {
+      if (valor === "") return "Elige tu talla.";
+      const talla = Number(valor);
+      if (!Number.isInteger(talla) || talla < 20 || talla > 50) {
+        return "La talla debe ser un número entre 20 y 50.";
+      }
+      return "";
+    }
+    default:
+      return "";
+  }
+}
+
+// Mientras el usuario escribe o cambia un campo, se limpia su error
+camposFormulario.forEach((campo) => {
+  campo.addEventListener("input", () => limpiarError(campo));
+});
+
+formReserva.addEventListener("submit", (evento) => {
+  evento.preventDefault();
+  let formularioValido = true;
+
+  camposFormulario.forEach((campo) => {
+    const textoError = validarCampo(campo);
+    if (textoError === "") {
+      limpiarError(campo);
+    } else {
+      mostrarError(campo, textoError);
+      formularioValido = false;
+    }
+  });
+
+  // Con algún error: no se envía y se oculta el mensaje de éxito
+  if (!formularioValido) {
+    mensajeExito.hidden = true;
+    return;
+  }
+
+  formReserva.reset();
+  mensajeExito.hidden = false;
+});

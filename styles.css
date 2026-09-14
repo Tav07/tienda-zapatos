@@ -458,6 +458,11 @@ h3 {
   color: #dc2626;
 }
 
+/* Resalta el campo inválido mientras muestra su error */
+.campo .campo-invalido {
+  border-color: #dc2626;
+}
+
 .exito {
   font-weight: 600;
   color: #16a34a;
